@@ -11,11 +11,11 @@ object TutorialApp:
    * 
    *  @param args 
    */
+
   def main(args: Array[String]): Unit =
     document.addEventListener("DOMContentLoaded", { (e: dom.Event) =>
       setupUI()
     })
-    println("Hello world")
   end main
 
   /** Sets up the UI for the page when called
@@ -40,6 +40,7 @@ object TutorialApp:
    *  Sets the event listener to the submit button so that
    *  the input values can be used by submitForm
    */
+
   def createForm(): Unit =
     val rootDiv = document.getElementById("rootDiv")
 
@@ -67,6 +68,7 @@ object TutorialApp:
     formButton.addEventListener("click", {(e: dom.MouseEvent) => 
       submitForm(nameInput, valueInput, rootDiv)
     })
+
   end createForm
 
   /** Handles the form submission
@@ -88,7 +90,7 @@ object TutorialApp:
     msgContainer.setAttribute("class", "msgContainer")
     outputNode.appendChild(msgContainer)
 
-    appendTextElement(msgContainer, name, "p", _class = "name")
+    appendTextElement(msgContainer, s"user: $name", "p", _class = "name")
     appendTextElement(msgContainer, value, "p", _class = "value")
   end submitForm
 
@@ -98,7 +100,7 @@ object TutorialApp:
    *  @param text wanted text for the element
    *  @param element the type of text element in HTML
    *  @param id optional id tag for the element
-   *  @param _class option class tag for the element
+   *  @param _class optional class tag for the element
    */
 
   def appendTextElement(targetNode: dom.Node, text: String, element: String,  id: String = null, _class: String = null): Unit =

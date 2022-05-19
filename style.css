@@ -11,15 +11,32 @@ body {
 #rootDiv {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+
 }
 
 #nameInput {
-  width: 15vw
+  border: 1px solid #848484;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  outline:0;
+  height:25px;
+  width: 12vw;
+  padding-left:10px;
+  padding-right:10px;
 }
 
 #valueInput {
-  width: 30vw
+  border: 1px solid #848484;
+  -webkit-border-radius: 10px;
+  -moz-border-radius:10px;
+  border-radius: 10px;
+  outline:0;
+  height:25px;
+  width: 275px;
+  padding-left:10px;
+  padding-right:10px;
 }
 
 #submitButton {
@@ -31,31 +48,31 @@ body {
 }
 
 .msgContainer {
-  width: 57vw;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
+  justify-content: flex-start;
+  border: 1px solid #848484;
+  -webkit-border-radius: 10px;
+  -moz-border-radius:10px;
+  border-radius: 10px;
+  outline:0;
+  width: 50vw;
 }
 
 .name {
   margin: 0px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-right: 5px;
-  padding-left: 5px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 7px;
   width: 12vw;
-
+  font-size: small;
 }
 
 .value {
   margin: 0px;
   padding-left: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-left-style: solid;
+  border-left: 1px solid #848484;
   border-width: 1px;
-  border-color: black;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  font-size: small;
 }
