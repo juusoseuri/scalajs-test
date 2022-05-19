@@ -1,0 +1,23 @@
+body {
+  font-family: sans-serif;
+  display: flex;
+  height: 90vh;
+  width: 100vw;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ededed;
+}
+
+#rootDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#nameInput {
+  width: 10vw
+}
+
+#valueInput {
+  width: 25vw
+}
