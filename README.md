@@ -1,8 +1,14 @@
-## sbt project compiled with Scala 3
+## ScalaJS project for testing the possibilities of the library
 
 ### Usage
 
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
+This is a normal Scala 3 sbt project including the ScalaJS plugin for sbt. This repository is used for testing the ScalaJS library
 
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+### Running
+
+In order to run the project, in console run the following commands: <br/>
+<code>$ sbt</code>
+<br/>
+<code>$ ~fastLinkJS</code> <br/>
+
+After this, it is possible to open the index.html file in your favorite browser. The page should update according to the changes made in the files.
