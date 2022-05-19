@@ -15,9 +15,47 @@ body {
 }
 
 #nameInput {
-  width: 10vw
+  width: 15vw
 }
 
 #valueInput {
-  width: 25vw
+  width: 30vw
+}
+
+#submitButton {
+  width: 11vw;
+}
+
+#form {
+  padding-bottom: 2vw;
+}
+
+.msgContainer {
+  width: 57vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+
+.name {
+  margin: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  width: 12vw;
+
+}
+
+.value {
+  margin: 0px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-left-style: solid;
+  border-width: 1px;
+  border-color: black;
 }

@@ -57,6 +57,7 @@ object TutorialApp:
     
     val formButton = document.createElement("button")
     formButton.textContent = "Submit"
+    formButton.setAttribute("id", "submitButton")
     
     rootDiv.appendChild(form)
     form.appendChild(nameInput)
@@ -64,7 +65,7 @@ object TutorialApp:
     form.appendChild(formButton)
 
     formButton.addEventListener("click", {(e: dom.MouseEvent) => 
-      submitForm(valueInput, form)
+      submitForm(nameInput, valueInput, rootDiv)
     })
   end createForm
 
@@ -77,11 +78,18 @@ object TutorialApp:
    *  @param outputNode node where the response is going to be appended
    */
 
-  def submitForm(inputNode: dom.Node, outputNode: dom.Node): Unit = 
-    val value = inputNode.asInstanceOf[html.Input].value
-    println(value)
-    inputNode.asInstanceOf[html.Input].value = ""
-    appendTextElement(outputNode, value, "p")
+  def submitForm(inputNameNode: dom.Node, inputValueNode: dom.Node, outputNode: dom.Node): Unit = 
+    val value = inputValueNode.asInstanceOf[html.Input].value
+    val name = inputNameNode.asInstanceOf[html.Input].value
+    if value == "" then return
+    
+    inputValueNode.asInstanceOf[html.Input].value = ""
+    val msgContainer = document.createElement("div")
+    msgContainer.setAttribute("class", "msgContainer")
+    outputNode.appendChild(msgContainer)
+
+    appendTextElement(msgContainer, name, "p", _class = "name")
+    appendTextElement(msgContainer, value, "p", _class = "value")
   end submitForm
 
   /** Appends wanted text element
@@ -97,6 +105,7 @@ object TutorialApp:
     val parNode = document.createElement(element)
     parNode.textContent = text
     if id != null then parNode.id = id
+    if _class != null then parNode.classList.add(_class)
     targetNode.appendChild(parNode)
   end appendTextElement
 
