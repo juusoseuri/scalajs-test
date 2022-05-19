@@ -40,7 +40,14 @@ body {
 }
 
 #submitButton {
+  border: 1px solid #848484;
+  background-color:#1b1b1b;
+  color: white;
   width: 11vw;
+  height: 25px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
 
 #form {

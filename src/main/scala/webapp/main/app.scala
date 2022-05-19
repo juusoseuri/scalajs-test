@@ -29,7 +29,7 @@ object TutorialApp:
     rootDiv.id = "rootDiv"
     document.body.appendChild(rootDiv)
 
-    appendTextElement(rootDiv, "Quiz", "h1", "quizHeader")
+    addTextElement(rootDiv, "Header", "h1", "quizHeader")
 
     createForm()
 
@@ -51,7 +51,6 @@ object TutorialApp:
     nameInput.setAttribute("id", "nameInput")
     nameInput.setAttribute("type", "text")
 
-    
     val valueInput = document.createElement("INPUT")
     valueInput.setAttribute("id", "valueInput")
     valueInput.setAttribute("type", "text")
@@ -68,7 +67,6 @@ object TutorialApp:
     formButton.addEventListener("click", {(e: dom.MouseEvent) => 
       submitForm(nameInput, valueInput, rootDiv)
     })
-
   end createForm
 
   /** Handles the form submission
@@ -83,15 +81,15 @@ object TutorialApp:
   def submitForm(inputNameNode: dom.Node, inputValueNode: dom.Node, outputNode: dom.Node): Unit = 
     val value = inputValueNode.asInstanceOf[html.Input].value
     val name = inputNameNode.asInstanceOf[html.Input].value
-    if value == "" then return
+    if value == "" || name == "" then return
     
     inputValueNode.asInstanceOf[html.Input].value = ""
     val msgContainer = document.createElement("div")
     msgContainer.setAttribute("class", "msgContainer")
     outputNode.appendChild(msgContainer)
 
-    appendTextElement(msgContainer, s"user: $name", "p", _class = "name")
-    appendTextElement(msgContainer, value, "p", _class = "value")
+    addTextElement(msgContainer, s"user: $name", "p", _class = "name")
+    addTextElement(msgContainer, value, "p", _class = "value")
   end submitForm
 
   /** Appends wanted text element
@@ -103,12 +101,39 @@ object TutorialApp:
    *  @param _class optional class tag for the element
    */
 
-  def appendTextElement(targetNode: dom.Node, text: String, element: String,  id: String = null, _class: String = null): Unit =
+  def addTextElement(targetNode: dom.Node, 
+                     text: String, 
+                     element: String,
+                     id: String = null,
+                     _class: String = null): Unit =
     val parNode = document.createElement(element)
     parNode.textContent = text
     if id != null then parNode.id = id
     if _class != null then parNode.classList.add(_class)
     targetNode.appendChild(parNode)
-  end appendTextElement
+  end addTextElement
+
+  def addInputElement(targetNode: dom.Node, 
+                      id: String = null, 
+                      _class: String = null): Unit =
+    val form = document.createElement("INPUT")
+    if id != null then form.setAttribute("id", id)
+    if _class != null then form.setAttribute("class", _class)
+    targetNode.appendChild(form)
+  end addInputElement
+
+  def addSubmitButton(valueInput: dom.Node,
+                      targetNode: dom.Node,
+                      submitAction: () => Unit,  
+                      id: String = null,
+                      _class: String = null): Unit =
+    val button = document.createElement("button")
+    if id != null then button.setAttribute("id", id)
+    if _class != null then button.setAttribute("class", _class)
+    targetNode.appendChild(button)
+    button.addEventListener("click", {(e: dom.MouseEvent) => 
+      submitAction()
+    })
+  end addSubmitButton
 
 end TutorialApp
