@@ -52,6 +52,7 @@ body {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  font-size: small;
 }
 
 #form {
@@ -67,6 +68,7 @@ body {
   border-radius: 10px;
   outline:0;
   width: 50vw;
+  margin-bottom: 2px;
 }
 
 .name {
@@ -76,6 +78,7 @@ body {
   padding-left: 7px;
   width: 10vw;
   font-size: small;
+  font-weight: bold;
 }
 
 .value {

@@ -60,7 +60,7 @@ object TutorialApp:
 
     val msgContainer = addContainer(output, _class = "msgContainer")
 
-    addTextElement(msgContainer, s"user: $nameValue", "p", _class = "name")
+    addTextElement(msgContainer, nameValue, "p", _class = "name")
     addTextElement(msgContainer, msgValue, "p", _class = "value")
   end submitForm
 
