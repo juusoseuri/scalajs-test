@@ -5,6 +5,8 @@ import org.scalajs.dom.document
 import org.scalajs.dom.html
 
 /** Adds wanted text element as a child node
+ * 
+ *  Text element can be { "h1", ... , "h6", "p"}
  *  
  *  @param targetNode node where the text element is going to be appended
  *  @param text wanted text for the element
@@ -105,3 +107,13 @@ def addPicture(parentNode: dom.Node,
   parentNode.appendChild(pic)
   return pic
 end addPicture
+
+/** Adds a linebreak
+ * 
+ *  @param parentNode the node where you would want a linebreak
+ */
+
+def addLinebreak(parentNode: dom.Node): Unit = 
+  val br = document.createElement("br")
+  parentNode.appendChild(br)
+end addLinebreak
