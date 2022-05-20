@@ -24,19 +24,20 @@ object TutorialApp:
    */
 
   def setupUI(): Unit =
-    val rootDiv = addContainer(document.body, id = "rootDiv")
-    val header = addTextElement(rootDiv, "Header", "h1", "quizHeader")
+    val rootDiv = addContainer(document.body, Some("rootDiv"), None)
+    val header = addTextElement(rootDiv, "Header", "h1", Some("quizHeader"), None)
 
-    val inputContainer = addContainer(rootDiv, id = "inputContainer")
+    val inputContainer = addContainer(rootDiv, Some("inputContainer"), None)
     
-    val nameInput = addInputElement(inputContainer, id = "nameInput")
-    val valueInput = addInputElement(inputContainer, id = "valueInput")
+    val nameInput = addInputElement(inputContainer, Some("nameInput"), None)
+    val valueInput = addInputElement(inputContainer, Some("valueInput"), None)
     val submitButton = addSubmitButton(
       inputContainer, 
       () => submitForm(nameInput, valueInput, rootDiv),
-      id = "submitButton"
+      Some("submitButton"),
+      None
     )
-    val pic = addPicture(rootDiv, "images/koira.jpeg", id = "kuva")
+    val pic = addPicture(rootDiv, "images/koira.jpeg", Some("kuva"), None)
   end setupUI
 
   /** Handles the form submission
@@ -45,7 +46,7 @@ object TutorialApp:
    *  then makes a response to the page
    * 
    *  This would be a method that the students can do themselves
-   *  and the current version is just an example and placeholder
+   *  and the current version is just an example and a placeholder
    *  
    *  @param name the name input field element
    *  @param msg the message input field element
@@ -59,9 +60,9 @@ object TutorialApp:
     if msgValue == "" || nameValue == "" then return
     setInputValue(msg, "")
 
-    val msgContainer = addContainer(output, _class = "msgContainer")
+    val msgContainer = addContainer(output, None, Some("msgContainer"))
 
-    addTextElement(msgContainer, nameValue, "p", _class = "name")
-    addTextElement(msgContainer, msgValue, "p", _class = "value")
+    addTextElement(msgContainer, nameValue, "p", None, Some("name"))
+    addTextElement(msgContainer, msgValue, "p", None, Some("value"))
   end submitForm
 end TutorialApp

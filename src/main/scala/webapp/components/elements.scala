@@ -17,14 +17,13 @@ import org.scalajs.dom.html
 def addTextElement(targetNode: dom.Node, 
                     text: String, 
                     element: String,
-                    id: String = null,
-                    _class: String = null): dom.Element =
-  val parNode = document.createElement(element)
-  parNode.textContent = text
-  if id != null then parNode.id = id
-  if _class != null then parNode.classList.add(_class)
-  targetNode.appendChild(parNode)
-  return parNode
+                    id: Option[String],
+                    _class: Option[String]): dom.Element =
+  val textElement = document.createElement(element)
+  textElement.textContent = text
+  addTags(textElement, id, _class)
+  targetNode.appendChild(textElement)
+  return textElement
 end addTextElement
 
 /** Adds input field as a child node
@@ -36,11 +35,10 @@ end addTextElement
  */
 
 def addInputElement(parentNode: dom.Node, 
-                    id: String = null, 
-                    _class: String = null): dom.Element =
+                    id: Option[String], 
+                    _class: Option[String]): dom.Element =
   val form = document.createElement("INPUT")
-  if id != null then form.setAttribute("id", id)
-  if _class != null then form.classList.add(_class)
+  addTags(form, id, _class)
   parentNode.appendChild(form)
   return form
 end addInputElement
@@ -56,8 +54,8 @@ end addInputElement
 
 def addSubmitButton(parentNode: dom.Node,
                     submitAction: () => Unit,  
-                    id: String = null,
-                    _class: String = null): dom.Element =
+                    id: Option[String],
+                    _class: Option[String]): dom.Element =
   val button = document.createElement("button")
   button.textContent = "Submit"
   addTags(button, id, _class)
@@ -80,8 +78,8 @@ end addSubmitButton
  */
 
 def addContainer(parentNode: dom.Node, 
-                id: String = null, 
-                _class: String= null): dom.Element = 
+                id: Option[String], 
+                _class: Option[String]): dom.Element = 
   val div = document.createElement("div")  
   addTags(div, id, _class)
   parentNode.appendChild(div)
@@ -99,8 +97,8 @@ end addContainer
 
 def addPicture(parentNode: dom.Node,
                src: String,
-               id: String = null,
-               _class: String = null): dom.Element =
+               id: Option[String],
+               _class: Option[String]): dom.Element =
   val pic = document.createElement("IMG")
   pic.setAttribute("src", src)
   addTags(pic, id, _class)

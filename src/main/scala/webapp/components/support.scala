@@ -28,8 +28,12 @@ def setInputValue(node: dom.Element, value: String): Unit = node.asInstanceOf[ht
  */
 
 def addTags(node: dom.Element,
-            id: String = null,
-            _class: String = null): Unit =
-  if id != null then node.id = id
-  if _class != null then node.setAttribute("class", _class)
+            id: Option[String],
+            _class: Option[String]): Unit =
+  id match
+    case Some(i) => node.id = i
+    case None => 
+  _class match
+    case Some(c) => node.setAttribute("class", c)
+    case None =>
 end addTags
