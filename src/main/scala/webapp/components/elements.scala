@@ -88,6 +88,15 @@ def addContainer(parentNode: dom.Node,
   return div
 end addContainer
 
+/** Adds a picture
+ *  
+ *  @param parentNode the parent node where the picture is appended
+ *  @param src the relative path to the image file
+ *  @param id optional id tag for the picture
+ *  @param _class optional class tag for the container
+ *  @return the created image element
+ */
+
 def addPicture(parentNode: dom.Node,
                src: String,
                id: String = null,
