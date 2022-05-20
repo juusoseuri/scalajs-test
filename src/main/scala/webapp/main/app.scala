@@ -20,8 +20,7 @@ object TutorialApp:
 
   /** Sets up the UI for the page when called
    * 
-   *  When called calls and renders necessary parts
-   *  for the page
+   *  When called calls and renders necessary parts for the page
    */
 
   def setupUI(): Unit =
@@ -44,10 +43,12 @@ object TutorialApp:
    *  Takes the value of the input, resets its value and 
    *  then makes a response to the page
    * 
-   *  This could be a method that the students can do themselves
+   *  This would be a method that the students can do themselves
+   *  and the current version is just an example and placeholder
    *  
-   *  @param inputName node which value is going to be read
-   *  @param outputNode node where the response is going to be appended
+   *  @param name the name input field element
+   *  @param msg the message input field element
+   *  @param output node where the response is going to be appended
    */
 
   def submitForm(name: dom.Element, msg: dom.Element, output: dom.Element): Unit = 
@@ -127,19 +128,49 @@ object TutorialApp:
     return button
   end addSubmitButton
 
-  def addContainer(targetNode: dom.Node, 
+  /** Adds a container
+   * 
+   *  The container is added as a child node to the assigned parent
+   *  Other elements can be easily stored inside of this container
+   * 
+   *  @param parentNode the parent node where the container element is appended
+   *  @param id optional id tag for the container
+   *  @param _class optional class tag for the container
+   *  @return the created container element
+   */
+
+  def addContainer(parentNode: dom.Node, 
                    id: String = null, 
                    _class: String= null): dom.Element = 
     val div = document.createElement("div")  
     addTags(div, id, _class)
-    targetNode.appendChild(div)
+    parentNode.appendChild(div)
     return div
   end addContainer
 
+  /** Gets input value from a input element
+   * 
+   *  @param node the input node which field's value is desired
+   *  @return the string responding for the value of the input field
+   */
   
   def getInputValue(node: dom.Element): String = node.asInstanceOf[html.Input].value
+
+  /** Sets the value for the input field
+   *  
+   *  @param node the input node which field's value is going to be set
+   *  @param String the desired value for the input field
+   */
+
   def setInputValue(node: dom.Element, value: String): Unit = node.asInstanceOf[html.Input].value = value
   
+  /** Helper function for adding tags to a element
+   * 
+   *  @param node the node where the tags are going to be added
+   *  @param id optional id tag for the element
+   *  @param _class optional class tag for the element
+   */
+
   def addTags(node: dom.Element,
               id: String = null,
               _class: String = null): Unit =
