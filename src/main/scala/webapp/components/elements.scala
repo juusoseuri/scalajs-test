@@ -80,10 +80,21 @@ end addSubmitButton
  */
 
 def addContainer(parentNode: dom.Node, 
-                  id: String = null, 
-                  _class: String= null): dom.Element = 
+                id: String = null, 
+                _class: String= null): dom.Element = 
   val div = document.createElement("div")  
   addTags(div, id, _class)
   parentNode.appendChild(div)
   return div
 end addContainer
+
+def addPicture(parentNode: dom.Node,
+               src: String,
+               id: String = null,
+               _class: String = null): dom.Element =
+  val pic = document.createElement("IMG")
+  pic.setAttribute("src", src)
+  addTags(pic, id, _class)
+  parentNode.appendChild(pic)
+  return pic
+end addPicture
