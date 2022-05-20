@@ -36,6 +36,7 @@ object TutorialApp:
       () => submitForm(nameInput, valueInput, rootDiv),
       id = "submitButton"
     )
+    val pic = addPicture(rootDiv, "images/koira.jpeg", id = "kuva")
   end setupUI
 
   /** Handles the form submission
