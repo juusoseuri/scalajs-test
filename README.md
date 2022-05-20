@@ -1,4 +1,4 @@
-## Testing to build a component library in ScalaJS
+## Building a basic component library in ScalaJS
 
 ### Usage
 
