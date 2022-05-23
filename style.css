@@ -98,3 +98,8 @@ body {
 .language {
   padding-left: 3vw;
 }
+
+#flag {
+  height: 6vw;
+  margin-top: 2vw;
+}

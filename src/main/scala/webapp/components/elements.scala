@@ -108,6 +108,18 @@ def addPicture(parentNode: dom.Node,
   return pic
 end addPicture
 
+/** Updates the picture
+ * 
+ *  @param id id of the picture
+ *  @param src src for the new picture
+ *  @return the image element
+ */
+def updatePicture(id: String, src: String): dom.Element = 
+  val pic = document.getElementById(id)
+  pic.setAttribute("src", src)
+  return pic
+end updatePicture
+
 /** Adds a linebreak
  * 
  *  @param parentNode the node where you would want a linebreak
@@ -120,11 +132,13 @@ end addLinebreak
 
 /** Updates text for the text element
  * 
- * @param id id of the node to be updated
- * @param text the new text for the element
+ *  @param id id of the node to be updated
+ *  @param text the new text for the element
+ *  @return the updated element
  */
 
-def updateText(id: String, text: String): Unit =
+def updateText(id: String, text: String): dom.Element =
   val elem = document.getElementById(id)
   elem.innerText = text
+  return elem
 end updateText
