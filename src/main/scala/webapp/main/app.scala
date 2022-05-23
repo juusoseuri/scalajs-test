@@ -36,59 +36,86 @@ object TutorialApp:
     val header = addTextElement(rootDiv, "Header", "h1", Some("quizHeader"), None)
 
     val inputContainer = addContainer(rootDiv, Some("inputContainer"), None)
-    
-    val nameInput = addInputElement(inputContainer, Some("nameInput"), None)
+  
     val valueInput = addInputElement(inputContainer, Some("valueInput"), None)
     val submitButton = addSubmitButton(
       inputContainer, 
-      () => submitForm(nameInput, valueInput, rootDiv),
+      () => submitForm(valueInput, rootDiv),
       Some("submitButton"),
       None
     )
-
-
-
-    Ajax.get("https://restcountries.com/v2/name/peru?fields=name,capital,currencies").foreach(xhr => 
-      val res = JSON.parse(xhr.responseText)
-      
-      val country = decode[List[Country]](xhr.responseText)
-      
-      //poke.hp = res.stats[0].base_stat.asInstanceOf[Int]
-      country match {
-        case Left(error) => println(error)
-        case Right(json) => println(json(0).currencies(0).name)
-      }
-    )
-
+    val countryContainer = addContainer(rootDiv, None, None)
+    addTextElement(countryContainer, "", "p", Some("feedback"), None)
+    addTextElement(countryContainer, "", "p", Some("name"), None)
+    addTextElement(countryContainer, "", "p", Some("population"), None)
+    addContainer(countryContainer, Some("languages"), None)
   end setupUI
 
-  case class Country(name: String, capital: String, currencies: Buffer[Currency], independent: Boolean)
+  case class Country(
+    name: Option[String] = None, 
+    capital: Option[String] = None, 
+    population: Option[Int] = None,
+    independent: Boolean,
+    languages: Option[Buffer[Language]] = None,
+  )
 
-  case class Currency(code: String, name: String, symbol: String)
-  /** Handles the form submission
-   * 
-   *  Takes the value of the input, resets its value and 
-   *  then makes a response to the page
-   * 
-   *  This would be a method that the students can do themselves
-   *  and the current version is just an example and a placeholder
-   *  
-   *  @param name the name input field element
-   *  @param msg the message input field element
-   *  @param output node where the response is going to be appended
-   */
+  case class Language(
+    iso639_1: Option[String] = None,
+    iso639_2: Option[String] = None,
+    name: Option[String] = None,
+    nativeName: Option[String] = None
+  )
 
-  def submitForm(name: dom.Element, msg: dom.Element, output: dom.Element): Unit = 
-    val msgValue = getInputValue(msg)
-    val nameValue = getInputValue(name)
+  def submitForm(input: dom.Element, output: dom.Element): Unit = 
+    val countryName = getInputValue(input)
+    val languageContainer = document.getElementById("languages")
 
-    if msgValue == "" || nameValue == "" then return
-    setInputValue(msg, "")
+    updateText("name", "")
+    updateText("population", "")
+    updateText("languages", "")
+    updateText("feedback", "loading...")
 
-    val msgContainer = addContainer(output, None, Some("msgContainer"))
+    Ajax.get(
+      s"https://restcountries.com/v2/name/${countryName}?fields=name,capital,languages,population"
+    ).map(xhr => 
+      val response = decode[List[Country]](xhr.responseText)
 
-    addTextElement(msgContainer, nameValue, "p", None, Some("name"))
-    addTextElement(msgContainer, msgValue, "p", None, Some("value"))
+      updateText("feedback", "")
+      response match {
+        case Left(error) => {
+          println(error)
+          updateText("feedback", "Problem with JSON")
+        }
+        case Right(countryList) => {
+          val country = countryList(0)
+          country.name match {
+            case Some(name) => updateText("name", s"Name: $name")
+            case None => updateText("name", s"Name: Not available")
+          }
+          country.population match {
+            case Some(pop) => updateText("population", s"Population: $pop")
+            case None => updateText("population", s"Population: Not available")
+          }
+          country.languages match {
+            case None => updateText("languages", s"Language not available")
+            case Some(list) => 
+              addTextElement(languageContainer, "Language(s):\n", "p", None, None)
+              for 
+                language <- list
+              do 
+                language.name match {
+                  case Some(language) => 
+                    addTextElement(languageContainer, s"– $language\n", "p", None, Some("language"))
+                  case None =>
+                }
+          }
+          println(s"Got response for ${country.name}")
+        }
+      }
+    ).recover(xhr => 
+      updateText("feedback", "Country not found")
+    )
+
   end submitForm
 
 end TutorialApp
