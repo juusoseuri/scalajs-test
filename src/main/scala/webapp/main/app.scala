@@ -2,7 +2,15 @@ package webapp.main
 
 import org.scalajs.dom
 import org.scalajs.dom.document
+import org.scalajs.dom.html
+import org.scalajs.dom.fetch
 import webapp.components._
+import org.scalajs.dom
+import dom.ext.Ajax
+import concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js.JSON
+import io.circe._, io.circe.parser._, io.circe.generic.auto._
+import scala.collection.mutable.Buffer
 
 object TutorialApp:
 
@@ -37,9 +45,26 @@ object TutorialApp:
       Some("submitButton"),
       None
     )
-    val pic = addPicture(rootDiv, "images/koira.jpeg", Some("kuva"), None)
+
+
+
+    Ajax.get("https://restcountries.com/v2/name/peru?fields=name,capital,currencies").foreach(xhr => 
+      val res = JSON.parse(xhr.responseText)
+      
+      val country = decode[List[Country]](xhr.responseText)
+      
+      //poke.hp = res.stats[0].base_stat.asInstanceOf[Int]
+      country match {
+        case Left(error) => println(error)
+        case Right(json) => println(json(0).currencies(0).name)
+      }
+    )
+
   end setupUI
 
+  case class Country(name: String, capital: String, currencies: Buffer[Currency], independent: Boolean)
+
+  case class Currency(code: String, name: String, symbol: String)
   /** Handles the form submission
    * 
    *  Takes the value of the input, resets its value and 
@@ -65,4 +90,5 @@ object TutorialApp:
     addTextElement(msgContainer, nameValue, "p", None, Some("name"))
     addTextElement(msgContainer, msgValue, "p", None, Some("value"))
   end submitForm
+
 end TutorialApp
