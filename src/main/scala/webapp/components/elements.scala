@@ -19,8 +19,8 @@ import org.scalajs.dom.html
 def addTextElement(targetNode: dom.Node, 
                     text: String, 
                     element: String,
-                    id: Option[String],
-                    _class: Option[String]): dom.Element =
+                    id: Option[String] = None,
+                    _class: Option[String] = None): dom.Element =
   val textElement = document.createElement(element)
   textElement.textContent = text
   addTags(textElement, id, _class)
@@ -37,8 +37,8 @@ end addTextElement
  */
 
 def addInputElement(parentNode: dom.Node, 
-                    id: Option[String], 
-                    _class: Option[String]): dom.Element =
+                    id: Option[String] = None, 
+                    _class: Option[String] = None): dom.Element =
   val form = document.createElement("INPUT")
   addTags(form, id, _class)
   parentNode.appendChild(form)
@@ -56,8 +56,8 @@ end addInputElement
 
 def addSubmitButton(parentNode: dom.Node,
                     submitAction: () => Unit,  
-                    id: Option[String],
-                    _class: Option[String]): dom.Element =
+                    id: Option[String] = None,
+                    _class: Option[String] = None): dom.Element =
   val button = document.createElement("button")
   button.textContent = "Submit"
   addTags(button, id, _class)
@@ -80,8 +80,8 @@ end addSubmitButton
  */
 
 def addContainer(parentNode: dom.Node, 
-                id: Option[String], 
-                _class: Option[String]): dom.Element = 
+                id: Option[String] = None, 
+                _class: Option[String] = None): dom.Element = 
   val div = document.createElement("div")  
   addTags(div, id, _class)
   parentNode.appendChild(div)
@@ -99,8 +99,8 @@ end addContainer
 
 def addPicture(parentNode: dom.Node,
                src: String,
-               id: Option[String],
-               _class: Option[String]): dom.Element =
+               id: Option[String] = None,
+               _class: Option[String] = None): dom.Element =
   val pic = document.createElement("IMG")
   pic.setAttribute("src", src)
   addTags(pic, id, _class)

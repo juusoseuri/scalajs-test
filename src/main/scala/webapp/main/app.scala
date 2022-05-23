@@ -53,24 +53,23 @@ object TutorialApp:
    */
 
   def setupUI(): Unit =
-    val rootDiv = addContainer(document.body, Some("rootDiv"), None)
-    val header = addTextElement(rootDiv, "Header", "h1", Some("quizHeader"), None)
+    val rootDiv = addContainer(document.body, id = Some("rootDiv"))
+    val header = addTextElement(rootDiv, "Header", "h1", id = Some("quizHeader"))
 
-    val inputContainer = addContainer(rootDiv, Some("inputContainer"), None)
+    val inputContainer = addContainer(rootDiv, id = Some("inputContainer"))
   
-    val valueInput = addInputElement(inputContainer, Some("valueInput"), None)
+    val valueInput = addInputElement(inputContainer, id = Some("valueInput"))
     val submitButton = addSubmitButton(
       inputContainer, 
       () => submitForm(valueInput, rootDiv),
-      Some("submitButton"),
-      None
+      Some("submitButton")
     )
-    val countryContainer = addContainer(rootDiv, None, None)
-    addPicture(countryContainer, "", Some("flag"), None)
-    addTextElement(countryContainer, "", "p", Some("feedback"), None)
-    addTextElement(countryContainer, "", "p", Some("name"), None)
-    addTextElement(countryContainer, "", "p", Some("population"), None)
-    addContainer(countryContainer, Some("languages"), None)
+    val countryContainer = addContainer(rootDiv)
+    addPicture(countryContainer, "", id = Some("flag"))
+    addTextElement(countryContainer, "", "p", id = Some("feedback"))
+    addTextElement(countryContainer, "", "p", id = Some("name"))
+    addTextElement(countryContainer, "", "p", id = Some("population"))
+    addContainer(countryContainer, id = Some("languages"))
 
   end setupUI
 
@@ -86,51 +85,50 @@ object TutorialApp:
     
     Ajax.get(
       s"https://restcountries.com/v2/name/${countryName}?fields=name,capital,languages,population,flags"
-      ).map(xhr => 
-        val response = decode[List[Country]](xhr.responseText)
-        
-        updateText("feedback", "")
-        response match {
-          case Left(error) => {
-            println(error)
-            updateText("feedback", "Problem with JSON")
+    ).map(xhr => 
+      val response = decode[List[Country]](xhr.responseText)
+      
+      updateText("feedback", "")
+      response match {
+        case Left(error) => {
+          println(error)
+          updateText("feedback", "Problem with JSON")
+        }
+        case Right(countryList) => {
+          val country = countryList(0)
+          country.name match {
+            case Some(name) => updateText("name", s"Name: $name")
+            case None => updateText("name", s"Name: Not available")
           }
-          case Right(countryList) => {
-            val country = countryList(0)
-            country.name match {
-              case Some(name) => updateText("name", s"Name: $name")
-              case None => updateText("name", s"Name: Not available")
-            }
-            country.population match {
-              case Some(pop) => updateText("population", s"Population: $pop")
-              case None => updateText("population", s"Population: Not available")
-            }
-            country.languages match {
-              case None => updateText("languages", s"Language not available")
-              case Some(list) => 
-                addTextElement(languageContainer, "Language(s):\n", "p", None, None)
-                for 
-                  language <- list
-                do 
-                  language.name match {
-                    case Some(language) => 
-                      addTextElement(languageContainer, s"– $language\n", "p", None, Some("language"))
-                    case None =>
-                  }
-            }
-            country.flags match {
-              case Some(flag) => 
-                flag.png match {
-                  case Some(src) => updatePicture("flag", src)
+          country.population match {
+            case Some(pop) => updateText("population", s"Population: $pop")
+            case None => updateText("population", s"Population: Not available")
+          }
+          country.languages match {
+            case None => updateText("languages", s"Language not available")
+            case Some(list) => 
+              addTextElement(languageContainer, "Language(s):\n", "p")
+              for 
+                language <- list
+              do 
+                language.name match {
+                  case Some(language) => 
+                    addTextElement(languageContainer, s"– $language\n", "p", _class = Some("language"))
                   case None =>
                 }
-              case None =>
-            }
-            println(s"Got response for ${country.name}")
+          }
+          country.flags match {
+            case Some(flag) => 
+              flag.png match {
+                case Some(src) => updatePicture("flag", src)
+                case None =>
+              }
+            case None =>
           }
         }
-      ).recover(xhr => 
-        updateText("feedback", "Country not found")
-      )      
+      }
+    ).recover(xhr => 
+      updateText("feedback", s"Country \"${countryName}\" not found")
+    )      
   end submitForm
 end TutorialApp
