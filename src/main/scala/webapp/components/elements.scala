@@ -117,3 +117,14 @@ def addLinebreak(parentNode: dom.Node): Unit =
   val br = document.createElement("br")
   parentNode.appendChild(br)
 end addLinebreak
+
+/** Updates text for the text element
+ * 
+ * @param id id of the node to be updated
+ * @param text the new text for the element
+ */
+
+def updateText(id: String, text: String): Unit =
+  val elem = document.getElementById(id)
+  elem.innerText = text
+end updateText
