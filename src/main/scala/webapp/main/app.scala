@@ -101,7 +101,7 @@ object TutorialApp:
           for 
             language <- country.languages
           do 
-            addTextElement(languageContainer, s"– $language\n", "p", _class = Some("language"))
+            addTextElement(languageContainer, s"– ${language.name}\n", "p", _class = Some("language"))
             updatePicture("flag", country.flags.png)
         }
       }
