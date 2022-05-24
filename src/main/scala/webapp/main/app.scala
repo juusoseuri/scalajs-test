@@ -13,24 +13,23 @@ import io.circe._, io.circe.parser._, io.circe.generic.auto._
 import scala.collection.mutable.Buffer
 
 case class Country(
-  name: Option[String] = None, 
-  capital: Option[String] = None, 
-  population: Option[Int] = None,
+  name: String, 
+  population: Int,
   independent: Boolean,
-  languages: Option[Buffer[Language]] = None,
-  flags: Option[Flag] = None
+  languages: Buffer[Language],
+  flags: Flag
 )
 
 case class Language(
-  iso639_1: Option[String] = None,
-  iso639_2: Option[String] = None,
-  name: Option[String] = None,
-  nativeName: Option[String] = None
+  iso639_1: String,
+  iso639_2: String,
+  name: String,
+  nativeName: String
 )
 
 case class Flag(
-  png: Option[String] = None,
-  svg: Option[String] = None
+  png: String,
+  svg: String
 )
 
 object TutorialApp:
@@ -54,7 +53,7 @@ object TutorialApp:
 
   def setupUI(): Unit =
     val rootDiv = addContainer(document.body, id = Some("rootDiv"))
-    val header = addTextElement(rootDiv, "Header", "h1", id = Some("quizHeader"))
+    val header = addTextElement(rootDiv, "Find countries", "h1", id = Some("quizHeader"))
 
     val inputContainer = addContainer(rootDiv, id = Some("inputContainer"))
   
@@ -84,7 +83,7 @@ object TutorialApp:
     updateText("feedback", "loading...")
     
     Ajax.get(
-      s"https://restcountries.com/v2/name/${countryName}?fields=name,capital,languages,population,flags"
+      s"https://restcountries.com/v2/name/${countryName}?fields=name,languages,population,flags"
     ).map(xhr => 
       val response = decode[List[Country]](xhr.responseText)
       
@@ -96,35 +95,14 @@ object TutorialApp:
         }
         case Right(countryList) => {
           val country = countryList(0)
-          country.name match {
-            case Some(name) => updateText("name", s"Name: $name")
-            case None => updateText("name", s"Name: Not available")
-          }
-          country.population match {
-            case Some(pop) => updateText("population", s"Population: $pop")
-            case None => updateText("population", s"Population: Not available")
-          }
-          country.languages match {
-            case None => updateText("languages", s"Language not available")
-            case Some(list) => 
-              addTextElement(languageContainer, "Language(s):\n", "p")
-              for 
-                language <- list
-              do 
-                language.name match {
-                  case Some(language) => 
-                    addTextElement(languageContainer, s"– $language\n", "p", _class = Some("language"))
-                  case None =>
-                }
-          }
-          country.flags match {
-            case Some(flag) => 
-              flag.png match {
-                case Some(src) => updatePicture("flag", src)
-                case None =>
-              }
-            case None =>
-          }
+          updateText("name", s"Name: ${country.name}")
+          updateText("population", s"Population: ${country.population}")
+          addTextElement(languageContainer, "Language(s):\n", "p")
+          for 
+            language <- country.languages
+          do 
+            addTextElement(languageContainer, s"– $language\n", "p", _class = Some("language"))
+            updatePicture("flag", country.flags.png)
         }
       }
     ).recover(xhr => 
