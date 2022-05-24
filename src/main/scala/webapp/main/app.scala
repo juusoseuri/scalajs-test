@@ -55,7 +55,7 @@ object TutorialApp:
     val rootDiv = addContainer(document.body, id = Some("rootDiv"))
     val header = addTextElement(rootDiv, "Find countries", "h1", id = Some("quizHeader"))
 
-    val inputContainer = addContainer(rootDiv, id = Some("inputContainer"))
+    val inputContainer = addForm(rootDiv, id = Some("inputContainer"))
   
     val valueInput = addInputElement(inputContainer, id = Some("valueInput"))
     val submitButton = addSubmitButton(

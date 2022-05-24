@@ -63,6 +63,7 @@ def addSubmitButton(parentNode: dom.Node,
   addTags(button, id, _class)
   parentNode.appendChild(button)
   button.addEventListener("click", {(e: dom.MouseEvent) => 
+    e.preventDefault()
     submitAction()
   })
   return button
