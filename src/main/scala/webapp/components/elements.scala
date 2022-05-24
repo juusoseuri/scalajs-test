@@ -80,13 +80,32 @@ end addSubmitButton
  */
 
 def addContainer(parentNode: dom.Node, 
-                id: Option[String] = None, 
-                _class: Option[String] = None): dom.Element = 
+                 id: Option[String] = None, 
+                 _class: Option[String] = None): dom.Element = 
   val div = document.createElement("div")  
   addTags(div, id, _class)
   parentNode.appendChild(div)
   return div
 end addContainer
+
+/** Adds a form
+ * 
+ *  Form is added as a child node to the parent node
+ * 
+ *  @param parentNode the parent node where the form element is appended
+ *  @param id optional id tag for the form
+ *  @param _class optional class tag for the form
+ *  @return the created from element
+ */
+
+def addForm(parentNode: dom.Node,
+            id: Option[String] = None,
+            _class: Option[String] = None): dom.Element =
+  val form = document.createElement("FORM")
+  addTags(form, id, _class)
+  parentNode.appendChild(form)
+  return form
+end addForm
 
 /** Adds a picture
  *  
