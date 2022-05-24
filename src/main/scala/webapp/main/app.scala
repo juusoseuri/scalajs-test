@@ -57,12 +57,13 @@ object TutorialApp:
 
     val inputContainer = addForm(rootDiv, id = Some("inputContainer"))
   
-    val valueInput = addInputElement(inputContainer, id = Some("valueInput"))
+    val input = addInputElement(inputContainer, id = Some("valueInput"))
     val submitButton = addSubmitButton(
       inputContainer, 
-      () => submitForm(valueInput, rootDiv),
+      () => submitForm(input, rootDiv),
       Some("submitButton")
     )
+    setInputValue(input, "Finland")
     val countryContainer = addContainer(rootDiv)
     addPicture(countryContainer, "", id = Some("flag"))
     addTextElement(countryContainer, "", "p", id = Some("feedback"))
@@ -96,7 +97,16 @@ object TutorialApp:
         case Right(countryList) => {
           val country = countryList(0)
           updateText("name", s"Name: ${country.name}")
-          updateText("population", s"Population: ${country.population}")
+
+          val pop = country.population.toString.reverse
+          var popWithSpace = ""
+          for 
+            i <- 0 until pop.length 
+          do 
+            if (i % 3 == 0) popWithSpace = " " + popWithSpace
+            popWithSpace = pop(i) + popWithSpace
+          updateText("population", s"Population: ${popWithSpace}")
+          
           addTextElement(languageContainer, "Language(s):\n", "p")
           for 
             language <- country.languages
