@@ -9,3 +9,4 @@ project/metals.sbt
 .bsp
 target
 images
+.idea

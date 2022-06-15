@@ -4,13 +4,18 @@ import org.scalajs.dom
 import org.scalajs.dom.document
 import org.scalajs.dom.html
 import org.scalajs.dom.fetch
-import webapp.components._
+import webapp.components.*
 import org.scalajs.dom
 import dom.ext.Ajax
+
 import concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
-import io.circe._, io.circe.parser._, io.circe.generic.auto._
+import io.circe.*
+import io.circe.parser.*
+import io.circe.generic.auto.*
+
 import scala.collection.mutable.Buffer
+import scala.language.postfixOps
 
 case class Country(
   name: String, 
