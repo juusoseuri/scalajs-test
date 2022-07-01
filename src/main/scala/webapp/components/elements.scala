@@ -25,7 +25,7 @@ def addTextElement(targetNode: dom.Node,
   textElement.textContent = text
   addTags(textElement, id, _class)
   targetNode.appendChild(textElement)
-  return textElement
+  textElement
 end addTextElement
 
 /** Adds input field as a child node
@@ -42,7 +42,7 @@ def addInputElement(parentNode: dom.Node,
   val form = document.createElement("INPUT")
   addTags(form, id, _class)
   parentNode.appendChild(form)
-  return form
+  form
 end addInputElement
 
 /** Adds submit button as a child node
@@ -66,7 +66,7 @@ def addSubmitButton(parentNode: dom.Node,
     e.preventDefault()
     submitAction()
   })
-  return button
+  button
 end addSubmitButton
 
 /** Adds a container
@@ -105,7 +105,7 @@ def addForm(parentNode: dom.Node,
   val form = document.createElement("FORM")
   addTags(form, id, _class)
   parentNode.appendChild(form)
-  return form
+  form
 end addForm
 
 /** Adds a picture
@@ -137,7 +137,7 @@ end addPicture
 def updatePicture(id: String, src: String): dom.Element = 
   val pic = document.getElementById(id)
   pic.setAttribute("src", src)
-  return pic
+  pic
 end updatePicture
 
 /** Adds a linebreak
@@ -160,5 +160,5 @@ end addLinebreak
 def updateText(id: String, text: String): dom.Element =
   val elem = document.getElementById(id)
   elem.innerText = text
-  return elem
+  elem
 end updateText
